@@ -1,0 +1,8 @@
+thead {
+  border-top: hidden !important;
+}
+
+.table tbody tr:hover td,
+.table tbody tr:hover th {
+  background-color: #F7F7F7;
+}

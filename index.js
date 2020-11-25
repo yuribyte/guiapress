@@ -4,7 +4,7 @@ const connection = require('./database/database')
 
 const bodyParser = require('body-parser')
 
-const catController = require('./entities/categories/CategorieController')
+const catController = require('./entities/categories/CategoryController')
 const artController = require('./entities/articles/ArticleController')
 
 const catModel = require('./entities/categories/Category')

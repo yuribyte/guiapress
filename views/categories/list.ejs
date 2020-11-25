@@ -1,12 +1,12 @@
 <div class="container">
   <div class="card">
     <div class="card-header">
-      <h3>Lista de Categorias</h3>
+      <h3 style="cursor: default;">Lista de Categorias <a class="btn btn-success float-right" href="category/form">+ Nova Categoria</a></h3>
     </div>
     <div class="card-body">
       <table class="table">
         <thead>
-          <tr>
+          <tr style="cursor: default;">
             <th>Id</th>
             <th>Titulo</th>
             <th>Slug</th>
@@ -16,10 +16,13 @@
         <tbody>
           <% categories.forEach(item => { %>
             <tr>
-              <th><span class="badge badge-secondary" style="font-size: 15px;"><%= item.id %></span> </th>
-              <th><%= item.title %> </th>
-              <th><%= item.slug %> </th>
-              <th><a href="categories/details/<%= item.id %>" class="btn btn-dark">Detalhes</a></th>
+              <th class="align-middle" style="cursor: default;"><span class="badge badge-secondary" style="font-size: 15px;"><%= item.id %></span> </th>
+              <th class="align-middle" style="cursor: default;"><%= item.title %> </th>
+              <th class="align-middle" style="cursor: default;"><%= item.slug %> </th>
+              <th id="actions">
+                <a href="categories/edit/<%= item.id %>" class="btn btn-warning">Editar</a>
+                <a href="category/<%= item.id %>" class="btn btn-danger">Deletar</a>
+              </th>
             </tr>
           <% }) %>
         </tbody>

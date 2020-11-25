@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   })
 })
 
-router.get('/admin/form', (req, res) => {
+router.get('/form', (req, res) => {
   res.render('categories/form')
 })
 

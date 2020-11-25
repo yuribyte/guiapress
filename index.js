@@ -7,6 +7,9 @@ const bodyParser = require('body-parser')
 const catController = require('./entities/categories/CategorieController')
 const artController = require('./entities/articles/ArticleController')
 
+const catModel = require('./entities/categories/Category')
+const artModel = require('./entities/articles/Article')
+
 // View Engine
 app.set('view engine', 'ejs')
 

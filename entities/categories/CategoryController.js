@@ -6,7 +6,11 @@ const slugify = require('slugify')
 const Category = require('../categories/Category')
 
 router.get('/', (req, res) => {
-  res.render('categories')
+  const props = { raw: true }
+  Category.findAll(props).then(categories => {
+    res.render('categories', { categories })
+    console.log(categories)
+  })
 })
 
 router.get('/admin/form', (req, res) => {

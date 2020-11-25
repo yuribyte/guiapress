@@ -14,12 +14,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th><span class="badge badge-secondary" style="font-size: 15px;">00001</span></th>
-            <th>Super Dev</th>
-            <th>super-dev</th>
-            <th><button class="btn btn-dark">Detalhes</button></th>
-          </tr>
+          <% categories.forEach(item => { %>
+            <tr>
+              <th><span class="badge badge-secondary" style="font-size: 15px;"><%= item.id %></span> </th>
+              <th><%= item.title %> </th>
+              <th><%= item.slug %> </th>
+              <th><a href="categories/details/<%= item.id %>" class="btn btn-dark">Detalhes</a></th>
+            </tr>
+          <% }) %>
         </tbody>
       </table>
     </div>

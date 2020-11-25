@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const connection = require('./database/database')
 
+const path = require('path')
 const bodyParser = require('body-parser')
 
 const catController = require('./entities/categories/CategoryController')
@@ -18,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // Static Files
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, '/public')));
 
 // Database
 connection.authenticate()

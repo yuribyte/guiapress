@@ -5,7 +5,7 @@ const slugify = require('slugify')
 
 const Category = require('../categories/Category')
 
-router.get('/', (req, res) => {
+router.get('/list', (req, res) => {
   const props = { raw: true }
   Category.findAll(props).then(categories => {
     res.render('categories', { categories })
@@ -17,13 +17,34 @@ router.get('/form', (req, res) => {
   res.render('categories/form')
 })
 
+// ! CREATE
 router.post('/', (req, res) => {
   const { title } = req.body
   if (title != undefined) {
     Category.create({ title, slug: slugify(title) })
-      .then(() => res.redirect('/'))
+      .then(() => res.redirect('/category/list'))
   } else {
-    res.redirect('/admin/form')
+    res.redirect('/category/form') // ! Mantém na página
+  }
+})
+
+// ! DELETE
+router.post('/:id', (req, res) => {
+  const { id } = req.body
+  if (id != undefined) {
+    if (!isNaN(id)) {
+      if (id == req.params.id) {
+        Category.destroy({
+          where: { id }
+        }).then(() => res.redirect('/category/list'))
+      } else {
+        res.redirect('/category/list')
+      }
+    } else {
+      res.redirect('/category/list')
+    }
+  } else {
+    res.redirect('/category/list')
   }
 })
 

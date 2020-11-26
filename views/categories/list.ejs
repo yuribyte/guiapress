@@ -21,7 +21,7 @@
             <th class="align-middle" style="cursor: default;"><%= item.slug %> </th>
             <th id="actions">
               <a href="edit/<%= item.id %>" class="btn btn-warning">Editar</a>
-              <form action="<%= item.id %>" method="post" style="display: inline;" onsubmit="deleteCategory(event, this)">
+              <form action="/category/<%=item.id%>/delete" method="post" style="display: inline;" onsubmit="deleteCategory(event, this)">
                 <input type="hidden" name="id" value="<%= item.id %>">
                 <button class="btn btn-danger">Deletar</button>
               </form>

@@ -28,8 +28,16 @@ router.post('/', (req, res) => {
   }
 })
 
+router.post('/:id/update', (req, res) => {
+  const { title, id } = req.body
+  Category.update(
+    { title, slug: slugify(title) },
+    { where: { id } }
+  ).then(() => res.redirect('/category/list'))
+})
+
 // ! DELETE
-router.post('/:id', (req, res) => {
+router.post('/:id/delete', (req, res) => {
   const { id } = req.body
   if (id != undefined) {
     if (!isNaN(id)) {
@@ -43,6 +51,26 @@ router.post('/:id', (req, res) => {
     } else {
       res.redirect('/category/list')
     }
+  } else {
+    res.redirect('/category/list')
+  }
+})
+
+router.get('/edit/:id', (req, res) => {
+  const { id } = req.params
+
+  if (!isNaN(id)) {
+    Category.findByPk(id).then(category => {
+      if (category != undefined) {
+        if (category.id == id) {
+          res.render('categories/form-edit', { category })
+        }
+      } else {
+        res.redirect('/category/list')
+      }
+    }).catch(err => {
+      res.redirect('/category/list')
+    })
   } else {
     res.redirect('/category/list')
   }

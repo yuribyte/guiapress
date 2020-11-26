@@ -1,15 +1,13 @@
 const express = require('express')
 const router = express()
 
-const slugify = require('slugify')
-
 const Category = require('../categories/Category')
+const slugify = require('slugify')
 
 router.get('/list', (req, res) => {
   const props = { raw: true }
   Category.findAll(props).then(categories => {
     res.render('categories', { categories })
-    console.log(categories)
   })
 })
 

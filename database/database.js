@@ -4,9 +4,10 @@ const connection = new Sequelize(
   'guiapress',
   'root',
   'admin',
-  {
+  { // ! <-- options
     host: 'localhost',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    timezone: '-03:00'
   }
 )
 

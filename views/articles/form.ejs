@@ -1,22 +1,60 @@
 <%- include('../partials/header') %>
 
 <body>
+  <%- include('../partials/navbar') %>
+
   <div class="container">
     <div class="row">
       <div class="col">
-        <h1>
-          Article Form
-        </h1>
-        <article>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat suscipit autem sapiente dolores necessitatibus mollitia veritatis adipisci ullam, cum, modi, ex accusamus excepturi soluta deleniti ea ipsa voluptatum ipsam repudiandae.
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum nesciunt quos, cupiditate quia voluptates earum nisi eos iure aut! Voluptate at excepturi consectetur id voluptatem quisquam incidunt et asperiores aperiam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci est autem dolorum magnam nisi suscipit, fuga delectus architecto quae veritatis consequuntur nesciunt laboriosam, sed ipsa eius minima reprehenderit nostrum necessitatibus?
-          </p>
-        </article>
+        <hr>
+        <div class="card">
+          <div class="card-header">
+            <h2>Novo Artigo</h2>
+          </div>
+          <div class="card-body">
+            <form method="POST" action="/article">
+              <input class="form-control title" type="text" name="title" placeholder="Defina o titulo do Artigo"> <br>
+              <textarea class="form-control body" placeholder="Escreva seu artigo aqui" name="body" id="article" cols="30" rows="10"></textarea><br>
+              <label>Categoria:</label>
+              <select name="category" class="form-control">
+                <% categories.forEach((category) => { %>
+                <option value="<%= category.id %>"><%= category.title %></option>
+                <% }) %>
+              </select>
+              <br>
+              <button class="btn btn-success" disabled>Cadastrar</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </body>
 
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  // ! Configurando TinyMCE
+  tinymce.init({
+    language: "pt_BR",
+    selector: "#article",
+    plugins: [
+      'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+    ],
+    init_instance_callback: function (editor) {
+      var freeTiny = document.querySelector('.tox .tox-notification--in');
+      var freeTinySpanMsg = document.querySelector('.tox .tox-statusbar__branding');
+      freeTiny.style.display = 'none';
+      freeTinySpanMsg.style.display = 'none';
+    }
+  });
+</script>
+<script>
+  // ! Desativando botão caso titulo esteja vazio
+  const title = document.querySelector('.title');
+  let btn = document.querySelector('.btn');
+
+  title.addEventListener('input', function () {
+    btn.disabled = (this.value === '');
+  })
+</script>
 <%- include('../partials/footer') %>

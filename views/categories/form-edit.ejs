@@ -1,4 +1,4 @@
-<%- include('../partials/header.ejs') %>
+<%- include('../partials/header') %>
 
 <body>
   <%- include('../partials/navbar') %>
@@ -9,7 +9,7 @@
         <hr>
         <div class="card">
           <div class="card-header">
-            <h2>Update de Categoria</h2>
+            <h2>Edite a Categoria</h2>
           </div>
           <div class="card-body">
             <form method="POST" action="/category/<%=category.id%>/update">
@@ -24,4 +24,4 @@
   </div>
 </body>
 
-<%- include('../partials/header.ejs') %>
+<%- include('../partials/footer') %>

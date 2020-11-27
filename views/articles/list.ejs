@@ -23,14 +23,14 @@
         </thead>
         <tbody>
           <% articles.forEach(item => { %>
-          <tr>
+          <tr id="article-row-id-<%= item.id %>">
             <th class="align-middle" style="cursor: default;">
               <span class="badge badge-secondary" style="font-size: 15px;"><%= item.id %></span>
             </th>
             <th class="align-middle" style="cursor: default;"><%= item.title %> </th>
             <th class="align-middle" style="cursor: default;"><%= item.slug %> </th>
             <th class="align-middle" style="cursor: default;"><%= item.category.title %> </th>
-            <th id="actions">
+            <th id="actions-<%= item.id %>">
               <a href="edit/<%= item.id %>" class="btn btn-warning">Editar</a>
               <form action="/article/<%=item.id%>/delete" method="post" style="display: inline;" onsubmit="deleteArticle(event, this)">
                 <input type="hidden" name="id" value="<%= item.id %>">
@@ -50,6 +50,8 @@
 
     event.preventDefault()
 
+    let row = document.querySelector("#article-row-id-" + form.id.value)
+
     Swal.fire({
       title: 'Atenção!',
       text: 'Deseja deletar esse item?',
@@ -64,9 +66,10 @@
     }).then((result) => {
       if (result.isConfirmed) {
         toastr.success('Artigo deletado', 'Sucesso!')
+        row.style.display = 'none';
         setTimeout(() => {
           form.submit()
-        }, 800);
+        }, 1500);
       }
     })
   }

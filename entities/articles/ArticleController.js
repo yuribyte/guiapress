@@ -7,7 +7,10 @@ const slugify = require('slugify')
 
 
 router.get('/list', (req, res) => {
-  res.render('articles')
+  const props = { include: [{ model: Category }] }
+  Article.findAll(props).then(articles => {
+    res.render('articles', { articles })
+  })
 })
 
 router.get('/form', (req, res) => {

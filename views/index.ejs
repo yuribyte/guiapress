@@ -1,16 +1,36 @@
 <%- include ('./partials/header') %>
+<link rel="stylesheet" href="/css/articles.css">
 
 <body>
-<%- include ('./partials/navbar') %>
+  <%- include ('./partials/navbar') %>
 
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis, maxime. Praesentium dolore velit eveniet nihil ipsam, excepturi alias, ratione quos veritatis quaerat aut ducimus nam ut repudiandae voluptates deleniti voluptatem.
+  <section>
+    <div class="container" style="width: 60%; padding-bottom: 30px;">
+      <div class="jumbotron">
+        <h1 class="display-4">Bem vindo</h1>
+        <p class="lead">Blog do Guia do Programador.</p>
       </div>
+      <% articles.forEach(article => { %>
+
+      <div class="card shadow-sm bg-white rounded" style="margin-top: 20px;">
+        <div class="card-body">
+          <p class="card-subtitle mb-2 text-muted" style="font-size: 0.8rem;">
+            <span class="float-right">
+              <b class="article-author">
+                <!-- <%= article.author %>  --> </b><em id="article-createdAt-<%= article.id %>"><%= createdAt %></em>
+            </span>
+          </p>
+          <h4 class="card-title" style="font-weight: bold; color: black; padding-top: 5px;">
+            <a href="/article/<%= article.slug %>" style="font-weight: bold; color: black; padding-top: 5px;">
+              <%= article.title.replace(/[^\w\s]/gi, '') %>...
+            </a>
+          </h4>
+        </div>
+      </div>
+
+      <% }) %>
     </div>
-  </div>
+  </section>
 </body>
 
 <%- include ('./partials/footer') %>
-

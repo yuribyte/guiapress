@@ -1,0 +1,11 @@
+.card-title :hover {
+  text-decoration: underline;
+  -webkit-text-decoration-color: #ec16ec; /* Safari */
+  text-decoration-color: #ec16ec;
+  cursor: pointer;
+}
+
+h4 {
+  cursor: default;
+  text-decoration: none !important;
+}

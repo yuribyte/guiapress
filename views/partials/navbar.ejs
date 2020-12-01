@@ -1,12 +1,25 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
   <a class="navbar-brand" href="/">
     <h1>GuiaPress</h1>
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#content" aria-controls="content" aria-expanded="false" aria-label="Alterna navegação">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".content" aria-controls="content" aria-expanded="false" aria-label="Alterna navegação">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="content">
-    <ul class="navbar-nav ml-auto float-right">
+
+
+  <div class="collapse navbar-collapse content">
+
+    <ul class="navbar-nav ml-3 float-left" id="sub-content">
+      <% categories.forEach(category => { %>
+      <li class="nav-item">
+        <a href="/category/<%= category.slug %>" class="nav-link"><%= category.title %></a>
+      </li>
+      <% }) %>
+    </ul>
+
+    <ul class="navbar-nav ml-auto float-right" id="main-content">
       <li class="nav-item">
         <a href="/category/list" class="nav-link">Categorias</a>
       </li>
@@ -14,5 +27,15 @@
         <a href="/article/list" class="nav-link">Artigos</a>
       </li>
     </ul>
+
   </div>
+
 </nav>
+
+<style>
+  @media (max-width: 991px) {
+    #sub-content {
+      float: right !important;
+    }
+  }
+</style>

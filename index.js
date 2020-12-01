@@ -119,7 +119,7 @@ function formatDateHour(dados) {
   const yearF = date.getFullYear()
 
   const hour = date.getHours().toString()
-  const minutes = date.getMinutes().toString()
+  const minutes = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes()
   const seconds = date.getSeconds().toString()
 
   return `${dayF}/${monthF}/${yearF} às ${hour}:${minutes}:${seconds}`

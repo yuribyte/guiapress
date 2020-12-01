@@ -9,8 +9,9 @@ const Category = connection.define('categories', {
   slug: {
     type: Sequelize.STRING,
     allowNull: false
-
   }
 })
+
+Category.sync({ force: false }).then(() => { }) 
 
 module.exports = Category

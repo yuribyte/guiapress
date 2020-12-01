@@ -10,16 +10,21 @@ const Article = connection.define('articles', {
   slug: {
     type: Sequelize.STRING,
     allowNull: false
-
   },
   body: {
     type: Sequelize.TEXT,
     allowNull: false
-
+  },
+  summary: {
+    type: Sequelize.STRING,
+    allowNull: true
   }
-})
+})  
 
 Category.hasMany(Article)
 Article.belongsTo(Category)
+
+Article.sync({ force: false }).then(() => { }) 
+Category.sync({ force: false }).then(() => { }) 
 
 module.exports = Article

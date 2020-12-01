@@ -19,7 +19,7 @@ router.get('/form', (req, res) => {
 router.post('/', (req, res) => {
   const { title } = req.body
   if (title != undefined) {
-    Category.create({ title, slug: slugify(title) })
+    Category.create({ title, slug: slugify(title).toLowerCase() })
       .then(() => res.redirect('/category/list'))
   } else {
     res.redirect('/category/form') // ! Mantém na página

@@ -24,7 +24,7 @@ router.get('/form', (req, res) => {
 router.post('/', (req, res) => {
   const { title, body, category } = req.body
   if (title != undefined && body != undefined) {
-    Article.create({ title, body, categoryId: category, slug: slugify(title) })
+    Article.create({ title, body, categoryId: category, slug: slugify(title).toLowerCase() })
       .then(() => res.redirect('/article/list'))
   } else {
     res.redirect('/article/form') // ! Mantém na página

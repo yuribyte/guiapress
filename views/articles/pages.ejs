@@ -1,0 +1,33 @@
+<%- include ('../partials/header') %>
+<link rel="stylesheet" href="/css/articles.css">
+
+<body>
+  <%- include ('../partials/navbar') %>
+
+  <section>
+    <div class="container" style="width: 60%; padding-bottom: 30px;">
+
+      <% if (Object.keys(result.articles.rows).length === 0 && result.next === false) { %>
+      <p class="text-muted mt-5" style="font-style: italic;">
+        As páginas chegaram ao fim <span style="font-style: normal !important; font-size: 22px;">😆</span> 
+      </p>
+      <% } %>
+
+      <% result.articles.rows.forEach(article => { %>
+
+      <div class="card shadow-sm bg-white rounded" style="margin-top: 20px;">
+        <div class="card-body">
+          <h4 class="card-title" style="font-weight: bold; color: black; padding-top: 5px;">
+            <a href="/article/<%= article.slug %>" style="font-weight: bold; color: black; padding-top: 5px;">
+              <%= article.title.replace(/[^\w\s]/gi, '') %>...
+            </a>
+          </h4>
+        </div>
+      </div>
+
+      <% }) %>
+    </div>
+  </section>
+</body>
+
+<%- include ('../partials/footer') %>

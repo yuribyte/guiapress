@@ -6,10 +6,18 @@ const Article = require('../articles/Article')
 const slugify = require('slugify')
 
 router.get('/list', (req, res) => {
-  const props = { include: [{ model: Category }] }
+  const props = {
+    include: [
+      { model: Category }
+    ],
+    order: [
+      ['updatedAt', 'DESC']
+    ]
+  }
+
   Article.findAll(props).then(articles => {
     if (articles != undefined) {
-      Category.findAll().then((categories) => {
+      Category.findAll({ raw: true }).then((categories) => {
         res.render('articles', { articles, categories })
       })
     }
@@ -37,6 +45,38 @@ router.post('/', (req, res) => {
   } else {
     res.redirect('/article/form') // ! Mantém na página
   }
+})
+
+// ! UPDATE
+router.get('/edit/:id', (req, res) => {
+  const { id } = req.params
+
+  if (!isNaN(id)) {
+    Article.findByPk(id, {
+      include: { model: Category }
+    }).then(article => {
+      if (article != undefined) {
+        Category.findAll({ raw: true }).then((categories) => {
+          res.render('articles/form-edit', { article, categories })
+        })
+      }
+    }).catch(err => {
+      res.redirect('/category/list')
+    })
+  } else {
+    console.log('Unexpected error')
+    res.redirect('/category/list')
+  }
+})
+
+// ! UPDATE
+router.post('/:id/update', (req, res) => {
+  const { id, title, body, category } = req.body
+  Article.update(
+    { title, body, categoryId: category, slug: slugify(title).toLowerCase() },
+    { where: { id } }
+  ).then(() => res.redirect('/article/list'))
+    .catch((err) => res.redirect('/'))
 })
 
 // ! DELETE

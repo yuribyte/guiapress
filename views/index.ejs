@@ -10,6 +10,13 @@
         <h1 class="display-4">Bem vindo</h1>
         <p class="lead">Blog do Guia do Programador.</p>
       </div>
+
+      <% if (Object.keys(articles).length === 0) { %>
+      <p class="text-muted font-italic">
+        Essa categoria ainda não teve artigos escritos...
+      </p>
+      <% } %>
+
       <% articles.forEach(article => { %>
 
       <div class="card shadow-sm bg-white rounded" style="margin-top: 20px;">

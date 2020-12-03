@@ -57,7 +57,7 @@ app.get('/', (req, res) => {
   })
 })
 
-// ! DETAILS
+// ! DETAILS ARTICLE
 app.get('/article/:slug', (req, res) => {
   const { slug } = req.params
 
@@ -74,6 +74,33 @@ app.get('/article/:slug', (req, res) => {
           categories,
           createdAt: formatDate(article),
           updatedAt: formatDateHour(article)
+        })
+      })
+    } else {
+      res.redirect('/')
+    }
+  }).catch((err) => {
+    res.redirect('/')
+  })
+})
+
+// ! DETAILS CATEGORY
+app.get('/category/:slug', (req, res) => {
+  const { slug } = req.params
+
+  Category.findOne({
+    where: { slug },
+    include: [
+      { model: Article }
+    ]
+  }).then((category) => {
+    if (category != undefined) {
+      Category.findAll().then((categories) => {
+        console.log(category.articles)
+        res.render('index', {
+          articles: category.articles,
+          categories,
+          createdAt: formatDateList(category.articles)
         })
       })
     } else {

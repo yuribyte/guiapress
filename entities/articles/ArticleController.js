@@ -31,6 +31,43 @@ router.get('/form', (req, res) => {
   })
 })
 
+router.get('/page/:num', (req, res) => {
+  const page = req.params.num
+  const limit = 4;
+  let offset = 0;
+  let next = false;
+
+  if (isNaN(page) || page == 1) {
+    offset = 0;
+  } else {
+    offset = (parseInt(page) - 1) * limit
+  }
+
+  Article.findAndCountAll({
+    limit, offset, order: [
+      ['id', 'DESC']
+    ]
+  }).then(articles => {
+
+    if (offset + limit >= articles.count) {
+      next = false;
+    } else {
+      next = true
+    }
+
+    const result = {
+      page: parseInt(page),
+      next, articles
+    }
+
+    res.json(result)
+
+  })
+
+})
+
+
+
 // ! CREATE
 router.post('/', (req, res) => {
   const { title, body, category } = req.body

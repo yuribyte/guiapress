@@ -11,7 +11,7 @@ router.get('/list', (req, res) => {
       { model: Category }
     ],
     order: [
-      ['updatedAt', 'DESC']
+      ['id', 'ASC']
     ]
   }
 

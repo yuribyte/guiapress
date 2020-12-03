@@ -12,7 +12,9 @@ router.get('/list', (req, res) => {
 })
 
 router.get('/form', (req, res) => {
-  res.render('categories/form')
+  Category.findAll({ raw: true }).then(categories => {
+    res.render('categories/form', { categories })
+  })
 })
 
 // ! CREATE
@@ -26,10 +28,11 @@ router.post('/', (req, res) => {
   }
 })
 
+// ! UPDATE
 router.post('/:id/update', (req, res) => {
   const { title, id } = req.body
   Category.update(
-    { title, slug: slugify(title) },
+    { title, slug: slugify(title).toLowerCase() },
     { where: { id } }
   ).then(() => res.redirect('/category/list'))
 })
@@ -60,16 +63,16 @@ router.get('/edit/:id', (req, res) => {
   if (!isNaN(id)) {
     Category.findByPk(id).then(category => {
       if (category != undefined) {
-        if (category.id == id) {
-          res.render('categories/form-edit', { category })
-        }
-      } else {
-        res.redirect('/category/list')
+        Category.findAll({ raw: true }).then(categories => {
+          res.render('categories/form-edit', { category, categories })
+        })
       }
     }).catch(err => {
+      console.log(err)
       res.redirect('/category/list')
     })
   } else {
+    console.log('Unexpected error')
     res.redirect('/category/list')
   }
 })

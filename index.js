@@ -5,11 +5,12 @@ const connection = require('./database/database')
 const path = require('path')
 const bodyParser = require('body-parser')
 
-const catController = require('./entities/categories/CategoryController')
-const artController = require('./entities/articles/ArticleController')
-
+// Models & Controllers
 const Category = require('./entities/categories/Category')
 const Article = require('./entities/articles/Article')
+
+const CategoryController = require('./entities/categories/CategoryController')
+const ArticleController = require('./entities/articles/ArticleController')
 
 // View Engine
 
@@ -37,8 +38,8 @@ connection
 
 // Routes
 
-app.use('/category', catController)
-app.use('/article', artController)
+app.use('/category', CategoryController)
+app.use('/article', ArticleController)
 
 app.get('/', (req, res) => {
   Article.findAll({
@@ -60,24 +61,27 @@ app.get('/', (req, res) => {
 app.get('/article/:slug', (req, res) => {
   const { slug } = req.params
 
-  Article.findOne({ where: { slug }, include: [{ model: Category }] })
-    .then((article) => {
-      if (article != undefined) {
-        Category.findAll().then((categories) => {
-          res.render('articles/details', {
-            article,
-            categories,
-            createdAt: formatDate(article),
-            updatedAt: formatDateHour(article)
-          })
+  Article.findOne({
+    where: { slug },
+    include: [
+      { model: Category }
+    ]
+  }).then((article) => {
+    if (article != undefined) {
+      Category.findAll().then((categories) => {
+        res.render('articles/details', {
+          article,
+          categories,
+          createdAt: formatDate(article),
+          updatedAt: formatDateHour(article)
         })
-      } else {
-        res.redirect('/')
-      }
-    })
-    .catch((err) => {
+      })
+    } else {
       res.redirect('/')
-    })
+    }
+  }).catch((err) => {
+    res.redirect('/')
+  })
 })
 
 // Functions

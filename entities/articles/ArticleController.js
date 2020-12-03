@@ -5,11 +5,14 @@ const Category = require('../categories/Category')
 const Article = require('../articles/Article')
 const slugify = require('slugify')
 
-
 router.get('/list', (req, res) => {
   const props = { include: [{ model: Category }] }
   Article.findAll(props).then(articles => {
-    res.render('articles', { articles })
+    if (articles != undefined) {
+      Category.findAll().then((categories) => {
+        res.render('articles', { articles, categories })
+      })
+    }
   })
 })
 
@@ -23,9 +26,14 @@ router.get('/form', (req, res) => {
 // ! CREATE
 router.post('/', (req, res) => {
   const { title, body, category } = req.body
+
   if (title != undefined && body != undefined) {
-    Article.create({ title, body, categoryId: category, slug: slugify(title).toLowerCase() })
-      .then(() => res.redirect('/article/list'))
+    Article.create({
+      title,
+      body,
+      categoryId: category,
+      slug: slugify(title).toLowerCase()
+    }).then(() => res.redirect('/article/list'))
   } else {
     res.redirect('/article/form') // ! Mantém na página
   }

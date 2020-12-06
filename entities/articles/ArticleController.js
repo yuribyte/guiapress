@@ -45,7 +45,7 @@ router.get('/page/:num', (req, res) => {
 
   Article.findAndCountAll({
     limit, offset, order: [
-      ['id', 'DESC']
+      ['createdAt', 'ASC']
     ]
   }).then(articles => {
 

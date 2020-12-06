@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="cursor: default;">
+          Usuários cadastrados
+        </h3>
+        <span class="button-link">
+          <a class="btn btn-success float-right" href="users/form">+ Adicionar Usuário</a>
+        </span>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr style="cursor: default;">
+            <th>ID</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(item => { %>
+          <tr id="user-row-id-<%= item.id %>">
+            <th class="align-middle" style="cursor: default;">
+              <span class="badge badge-secondary" style="font-size: 15px;"><%= item.id %></span>
+            </th>
+            <th class="align-middle" style="cursor: default;"><%= item.email %> </th>
+            <th id="actions-<%= item.id %>">
+              <form action="/user/<%=item.id%>/delete" method="post" style="display: inline;" onsubmit="deleteUser(event, this)">
+                <input type="hidden" name="id" value="<%= item.id %>">
+                <button class="btn btn-danger">Deletar</button>
+              </form>
+            </th>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  function deleteUser(event, form) {
+
+    event.preventDefault()
+
+    let row = document.querySelector("#user-row-id-" + form.id.value)
+
+    Swal.fire({
+      title: 'Atenção!',
+      text: 'Deseja deletar esse item?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#28A745',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, apague!',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+      focusConfirm: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        toastr.success('Usuário deletado', 'Sucesso!')
+        row.style.display = 'none';
+        setTimeout(() => {
+          form.submit()
+        }, 2000);
+      }
+    })
+  }
+</script>

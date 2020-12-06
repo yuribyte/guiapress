@@ -18,7 +18,7 @@
           <!-- <em style="font-weight: bold;"> <%= article.author %> </em> <br>-->
 
         </p>
-        <em>Artigo criado em: <%= createdAt %> | Atualizado em: <%= updatedAt %></em>
+        <em>Artigo criado em: <%= article.createdAt.substr(-20, 10); %> | Atualizado em: <%= article.updatedAt %></em>
         <section>
           <div class="card">
             <div class="card-body">

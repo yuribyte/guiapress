@@ -9,14 +9,27 @@
 
       <% if (Object.keys(result.articles.rows).length === 0 && result.next === false) { %>
       <p class="text-muted mt-5" style="font-style: italic;">
-        As páginas chegaram ao fim <span style="font-style: normal !important; font-size: 22px;">😆</span> 
+        As páginas chegaram ao fim <span style="font-style: normal !important; font-size: 22px;">😆</span>
       </p>
+      <div>
+        <a href="/"><i class="fas fa-home mr-2"></i>Inicio</a>
+      </div>
       <% } %>
 
       <% result.articles.rows.forEach(article => { %>
 
       <div class="card shadow-sm bg-white rounded" style="margin-top: 20px;">
         <div class="card-body">
+          <p class="card-subtitle mb-2 text-muted" style="font-size: 0.8rem;">
+            <span class="float-right">
+              <b class="article-author">
+                <!-- <%= article.author %>  -->
+              </b>
+              <em id="article-createdAt-<%= article.id %>">
+                <%= article.createdAt %>
+              </em>
+            </span>
+          </p>
           <h4 class="card-title" style="font-weight: bold; color: black; padding-top: 5px;">
             <a href="/article/<%= article.slug %>" style="font-weight: bold; color: black; padding-top: 5px;">
               <%= article.title.replace(/[^\w\s]/gi, '') %>...
@@ -24,8 +37,20 @@
           </h4>
         </div>
       </div>
-
       <% }) %>
+
+      <div class="row">
+        <div class="col col-12">
+          <% if (result.page > 2) { %>
+          <a href="/article/page/<%= result.page - 1 %> " class="float-left mt-3">Anterior <i class="fas fa-arrow-left"></i></a>
+          <% } else {%>
+          <a href="/" class="float-left">Anterior <i class="fas fa-arrow-left mt-3"></i></a>
+          <% } %>
+          <% if (result.next) { %>
+          <a href="/article/page/<%= result.page + 1 %> " class="float-right mt-3">Próximo <i class="fas fa-arrow-right"></i></a>
+          <% } %>
+        </div>
+      </div>
     </div>
   </section>
 </body>

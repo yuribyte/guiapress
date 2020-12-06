@@ -9,4 +9,27 @@ router.get('/users', (req, res) => {
   })
 })
 
+router.get('/users/form', (req, res) => {
+  res.render('users/form')
+})
+
+router.post('/user', (req, res) => {
+  const { email, password } = req.body
+
+  if (email !== undefined) {
+    if (email !== '' && password !== '') {
+      User.create({ email, password }).then(() => {
+        res.redirect('users')
+      }).catch((err) => {
+        console.log(err)
+        res.json({ email, password })
+      })
+    } else {
+      res.redirect('users/form')
+    }
+  } else {
+    res.redirect('users/form')
+  }
+})
+
 module.exports = router
